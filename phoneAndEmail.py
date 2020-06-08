@@ -10,6 +10,21 @@ import bs4
 import sys
 
 
+def tag_visible(element):
+    if element.parent.name in ['style', 'script', 'head', 'title', 'meta', '[document]']:
+        return False
+    if isinstance(element, bs4.element.Comment):
+        return False
+    return True
+
+
+def text_from_html(body):
+    soup = bs4.BeautifulSoup(body, 'html.parser')
+    texts = soup.findAll(text=True)
+    visible_texts = filter(tag_visible, texts)
+    return ' '.join(visible_texts)
+
+
 phoneRegex = re.compile(r'''(
                             (\d{3}|\(\d{3}\))?              # area code
                             (\s|-|\.)?                      # separator
@@ -33,7 +48,7 @@ else:
     # get text from web page
     res = requests.get(sys.argv[1])
     res.raise_for_status()
-    text = res.text
+    text = text_from_html(res.text)
 
 print(text)
 
