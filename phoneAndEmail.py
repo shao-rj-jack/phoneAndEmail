@@ -5,6 +5,10 @@
 
 import pyperclip
 import re
+import requests
+import bs4
+import sys
+
 
 phoneRegex = re.compile(r'''(
                             (\d{3}|\(\d{3}\))?              # area code
@@ -22,8 +26,18 @@ emailRegex = re.compile(r'''(
                              (\.[a-zA-Z]{2,4})  # dot something
                              )''', re.VERBOSE)
 
-text = str(pyperclip.paste())
-matches = []
+if len(sys.argv) == 1:
+    # get text from clipboard
+    text = str(pyperclip.paste())
+else:
+    # get text from web page
+    res = requests.get(sys.argv[1])
+    res.raise_for_status()
+    text = res.text
+
+print(text)
+
+"""matches = []
 
 # add all numbers and emails to matches list
 for groups in phoneRegex.findall(text):
@@ -42,4 +56,4 @@ if len(matches) > 0:
     print('Copied to clipboard:')
     print('\n'.join(matches))
 else:
-    print('No phone numbers or email addresses found.')
+    print('No phone numbers or email addresses found.')"""
