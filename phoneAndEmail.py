@@ -44,11 +44,14 @@ emailRegex = re.compile(r'''(
 if len(sys.argv) == 1:
     # get text from clipboard
     text = str(pyperclip.paste())
-else:
+elif len(sys.argv) == 2:
     # get text from web page
     res = requests.get(sys.argv[1])
     res.raise_for_status()
     text = text_from_html(res.text)
+else:
+    print('Error: too many arguments')
+    quit()
 
 matches = []
 
