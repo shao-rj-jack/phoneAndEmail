@@ -1,10 +1,14 @@
 # phoneAndEmail
 
-a python script that searches the current clipboard, finds all phone numbers and emails, then copies the formatted results into the clipboard
+a python script that can find all phone numbers and emails within a specific webpage or the current clipboard of the user
 
 ## Usage
 
-navigate to any website, preferably the "Contact Us" page
-use the "Select All" and "Copy" commands (ctrl+a then ctrl+c) to copy all of the page's contents into the clipboard
-run the script, any phone numbers and emails found will overwrite the clipboard
-if there are no phone numbers or emails found, the clipboard will not change and a corresponding message will be provided
+### Using the Terminal
+
+Run the script from the command line using `./phoneAndEmail.py _websiteURL_` (on Linux or OS X)
+
+On Windows, create a batch file like so:
+> @py.exe C:\path\to\pythonScript.py %*
+> @pause
+then call the batch file using the command `phoneAndEmail _websiteURL_`
